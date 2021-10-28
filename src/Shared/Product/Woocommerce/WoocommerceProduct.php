@@ -34,10 +34,24 @@ class WoocommerceProduct implements IPlatform
     public function getProducts($customerID, array $aArgs = []): array
     {
         $aArgs = wp_parse_args($aArgs, [
-            'post_status'    => 'publish',
-            'posts_per_page' => 50,
-            'post_type'      => ['product', 'product_variation'],
+            'post_status' => 'publish',
+            'limit'       => 50,
+            'post_type'   => ['product'],
+            'order'       => 'ASC',
+            'orderby'     => 'title'
         ]);
+        if (isset($aArgs['page']) && $aArgs['page']) {
+            $aArgs['paged'] = $aArgs['page'];
+        } else {
+            $aArgs['paged'] = 1;
+        }
+        unset($aArgs['page']);
+
+        if (!empty($aArgs['limit'])) {
+           // $aArgs['posts_per_page'] = $aArgs['limit'];
+            $aArgs['posts_per_page'] = 20;
+            unset($aArgs['limit']);
+        }
         if (!empty($search)) {
             $aArgs['s'] = $search;
             $aArgs['sentence'] = true;
@@ -102,20 +116,27 @@ class WoocommerceProduct implements IPlatform
         $aArgs = wp_parse_args($aArgs, [
             'post_status' => 'publish',
             'limit'       => 50,
-            'post_type'   => ['product', 'product_variation'],
+            'post_type'   => ['product'],
+            'order'       => 'ASC',
+            'orderby'     => 'title'
         ]);
-        if (!empty($search)) {
-            $aArgs['s'] = $search;
+        if (isset($aArgs['s']) && !empty($aArgs['s'])) {
             $aArgs['sentence'] = true;
         }
         if (!empty($aProductIDs)) {
             $aArgs['post__in'] = $aProductIDs;
         }
+        if (isset($aArgs['page']) && $aArgs['page']) {
+            $aArgs['paged'] = $aArgs['page'];
+        } else {
+            $aArgs['paged'] = 1;
+        }
+        unset($aArgs['page']);
+
         if (!empty($aArgs['limit'])) {
             $aArgs['posts_per_page'] = $aArgs['limit'];
             unset($aArgs['limit']);
         }
-
         $oQuery = new WP_Query($aArgs);
         if (!$oQuery->have_posts()) {
             wp_reset_postdata();

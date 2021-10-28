@@ -11,7 +11,7 @@
 | Param | Type | Description | Default |
 | --- | --- | ----| --- |
 | limit| int | Số lượng items / trang. Maximum: 30. Quá 30 sử dụng default | 30 |
-| cursor | string |  | undefined |
+| page | string |  | 1 |
 | s | string | search sản phẩm |  |
 | status | 'active' / 'deactive' / 'any' | Trường hợp all thì trả về cả popups active và deactive| any |
 | ?pluck | string | Mỗi pluck cách nhau bởi dấu phẩy. Ví dụ: title, id. Trường hợp không có pluck trả lai hết| undefined|
@@ -38,17 +38,15 @@ export interface Products {
 
 export interface Data {
     items: Items;
-    hasNextPage: boolean
+    maxPages: number
 }
 
 export interface Items {
     id: string
     title: string
-    createdAt: string
-    priceRangeV2: PriceRangeV2
-    featuredImage: FeaturedImage
-    handle: string
-    cursor: string
+    price: Price
+    image: Image
+    slug: string
     /** manual config badges**/
     manual: Manual
     isSelected: boolean
@@ -61,7 +59,7 @@ export interface Manual {
     'id': string,
 }
 
-export interface PriceRangeV2 {
+export interface Price {
     maxVariantPrice: MaxVariantPrice
     minVariantPrice: MinVariantPrice
 }

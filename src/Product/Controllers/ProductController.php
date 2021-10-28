@@ -18,9 +18,9 @@ use WP_REST_Request;
 
 class ProductController
 {
-    protected string $cursor      = '';
-    protected string $postType    = '';
-    protected bool   $hasNextPage = false;
+    protected int    $page     = 1;
+    protected string $postType = '';
+    protected int    $maxPages = 1;
 
     public function __construct()
     {
@@ -492,8 +492,10 @@ class ProductController
     {
         $aProducts = [];
         try {
-            $oRequest->set_param('s', sanitize_title($oRequest->get_param('s')));
-            $search = $oRequest->get_param('s');
+            if (!empty($oRequest->get_param('s'))) {
+                $oRequest->set_param('s', sanitize_title($oRequest->get_param('s')));
+                $search = $oRequest->get_param('s');
+            }
             if (!get_current_user_id()) {
                 throw new Exception(esc_html__('You must be logged in before performing this function',
                     MYSHOPKIT_MB_WP_REST_NAMESPACE), 401);
@@ -557,68 +559,55 @@ class ProductController
     {
         $aProducts = [];
         $search = $oRequest->get_param('s');
-        $limit = $oRequest->get_param('limit') ?: 50;
+        $limit = $oRequest->get_param('limit') ?? 50;
         try {
             if (empty($customerID = get_current_user_id())) {
                 throw new Exception(esc_html__('You must be logged in before performing this function',
-                    MYSHOPKIT_MB_REST_NAMESPACE), 401);
+                    MYSHOPKIT_MB_WP_REST_NAMESPACE), 401);
             }
 
             //lấy tối đa 200 sp đã lưu ra để kiểm tra
-//            $aManualResponse = (new ProductQueryService())->setRawArgs(
-//                array_merge(
-//                    $oRequest->get_params(),
-//                    [
-//                        'author'   => get_current_user_id(),
-//                        'postType' => $this->postType,
-//                        'limit'    => 200
-//                    ]
-//                )
-//            )->parseArgs()->setConfigKeyTitle(true)->query(new PostSkeleton(), 'id');
-//            if ($aManualResponse['status'] === 'error') {
-//                return MessageFactory::factory('rest')->error(
-//                    esc_html__('Sorry, We could not find your product', MYSHOPKIT_MB_REST_NAMESPACE),
-//                    $aManualResponse['code']
-//                );
-//            }
-//            $aDataManualProduct = $aManualResponse['data']['items'];
-            $cursor = $oRequest->get_param('cursor') ?? $this->cursor;
-            if (!empty($search)) {
-                $aWCResponse = (ProductFactory::setPlatform('woocommerce'))->search($search, $customerID, [
-                    'limit'  => 50,
-                    'cursor' => $cursor
-                ]);
-            } else {
-                $aWCResponse = $this->getProductsShopify($customerID,
+            $aManualResponse = (new ProductQueryService())->setRawArgs(
+                array_merge(
+                    $oRequest->get_params(),
                     [
-                        'limit'  => 50,
-                        'cursor' => $cursor
-                    ]);
-                // $this->hasNextPage = $aWCResponse['data']['hasNextPage'];
+                        'postType' => $this->postType,
+                        'limit'    => 200
+                    ]
+                )
+            )->parseArgs()->setConfigKeyTitle(true)->query(new PostSkeleton(), 'id');
+            if ($aManualResponse['status'] === 'error') {
+                return MessageFactory::factory('rest')->error(
+                    esc_html__('Sorry, We could not find your product', MYSHOPKIT_MB_WP_REST_NAMESPACE),
+                    $aManualResponse['code']
+                );
             }
-            var_dump($aWCResponse);
-            die();
-            $i = 1;
+            $aDataManualProduct = $aManualResponse['data']['items'];
+            $page =(int) $oRequest->get_param('page') ?? $this->page;
+            $i = 0;
             do {
-
+                $aWCResponse = $this->getProductsWC($customerID,
+                    [
+                        'limit' => $limit,
+                        'page'  => $page +$i
+                    ]);
+                $this->maxPages = $aWCResponse['data']['maxPages'];
                 if ($aWCResponse['status'] == 'error') {
                     throw new Exception($aWCResponse['message'], $aWCResponse['code']);
                 }
-                $aShopifyProduct = $aShopifyResponse['data']['items'];
-                $this->hasNextPage = $aShopifyResponse['data']['hasNextPage'];
+                $aWCProduct = $aWCResponse['data']['items'];
                 $this->handleFilterProduct(
-                    $aShopifyProduct,
+                    $aWCProduct,
                     $aDataManualProduct,
                     $aProducts,
-                    $shopName,
-                    $limit);
+                    20);
                 $i++;
-            } while (!(count($aProducts) == 50) && !($i == 4) && $this->hasNextPage);
+            } while (!(count($aProducts) == 20) && !($i == 5));
 
             return MessageFactory::factory('rest')->success(sprintf(esc_html__('We found %s products',
-                MYSHOPKIT_MB_REST_NAMESPACE), count($aProducts)), [
-                'items'       => array_values($aProducts),
-                'hasNextPage' => $this->hasNextPage
+                MYSHOPKIT_MB_WP_REST_NAMESPACE), count($aProducts)), [
+                'items'    => array_values($aProducts),
+                'maxPages' => $this->maxPages
             ]);
 
         } catch (Exception $exception) {
@@ -629,39 +618,37 @@ class ProductController
     /**
      * @throws Exception
      */
-    public function getProductsShopify(string $customerID, array $aParams): array
+    public function getProductsWC(string $customerID, array $aParams): array
     {
         return (ProductFactory::setPlatform('woocommerce'))->getProducts($customerID,
             $aParams);
     }
 
     public function handleFilterProduct(
-        array $aShopifyProduct,
+        array $aWCProduct,
         array &$aDataManualProduct,
         array &$aProducts,
-        string $shopName,
         int $limit
     ): array {
 
-        foreach ($aShopifyProduct as $aItem) {
+        foreach ($aWCProduct as $aItem) {
 
             //nếu số lượng sp bằng 50 hoặc bằng số lượng limit thì thoát khỏi vòng lặp
             if (count($aProducts) == 50 || count($aProducts) == $limit) {
-                $this->hasNextPage = true;
                 break;
             }
 
-            $isProductExist = isset($aDataManualProduct[AutoPrefix::nameProduct($shopName, $aItem['handle'])]);
+            $isProductExist = isset($aDataManualProduct[$aItem['id']]);
             if (!$isProductExist) {
                 $aProducts[] = array_merge($aItem, [
                     'manual'     => [],
                     'isSelected' => false,
                 ]);
             } else {
-                unset($aDataManualProduct[AutoPrefix::nameProduct($shopName, $aItem['handle'])]);
+                unset($aDataManualProduct[$aItem['id']]);
             }
 
-            $this->cursor = $aItem['cursor'];
+            //$this->page = $aItem['cursor'];
         }
 
         return $aProducts;
