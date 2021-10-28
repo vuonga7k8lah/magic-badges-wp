@@ -7,6 +7,19 @@
  * Version: 1.0
  */
 
+add_action('admin_notices', function () {
+
+    if (!class_exists('WooCommerce')) {
+        ?>
+        <div id="mysmbwp-converter-warning" class="notice notice-error">
+            <?php esc_html_e('Please install and activate WooCommerce to use Multi Currency for WooCommerce plugin.',
+                'magic-badges-wp'); ?>
+        </div>
+        <?php
+    }
+});
+
+
 use MyShopKitMBWP\Dashboard\Controllers\AuthController;
 
 define('MYSHOPKIT_MB_WP_VERSION', '1.0');
@@ -22,11 +35,8 @@ require_once plugin_dir_path(__FILE__) . 'vendor/autoload.php';
 
 
 require_once plugin_dir_path(__FILE__) . 'src/Dashboard/Dashboard.php';
-//require_once plugin_dir_path(__FILE__) . 'src/DefaultBadge/DefaultBadge.php';
-
-
-
-
+require_once plugin_dir_path(__FILE__) . 'src/DefaultBadge/DefaultBadge.php';
+require_once plugin_dir_path(__FILE__) . 'src/Product/Product.php';
 
 
 register_activation_hook(__FILE__, function () {

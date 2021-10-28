@@ -144,20 +144,20 @@ class WPUpload extends AUpload {
 			}
 
 			if ( ! $hasOneCorrectAtLeast ) {
-				return MessageFactory::factory( 'normal' )
+				return MessageFactory::factory(  )
 				                     ->error( esc_html__( 'Somethings went wrong, We could not upload your files',
-					                     'myshopkit' ), 422 );
+					                     MYSHOPKIT_MB_WP_REST_NAMESPACE ), 422 );
 			}
 
 			if ( $hasOneErrorAtLeast ) {
 				return MessageFactory::factory( 'normal' )->success( esc_html__( 'We could not upload some files',
-					'myshopkit' ),
+                    MYSHOPKIT_MB_WP_REST_NAMESPACE ),
 					$aMessages );
 			}
 
 			return MessageFactory::factory( 'normal' )
 			                     ->success( esc_html__( 'All files have been uploaded successfully.',
-				                     'myshopkit' ),
+                                     MYSHOPKIT_MB_WP_REST_NAMESPACE ),
 				                     $aMessages );
 		}
 	}

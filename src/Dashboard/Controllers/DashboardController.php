@@ -10,7 +10,7 @@ class DashboardController
 {
     use GeneralHelper;
 
-    const MYSMBWP_GLOBAL = 'MYSMBWP_GLOBAL';
+        const MYSMBWP_GLOBAL = 'MYSMBWP_GLOBAL';
 
     //private string $wookitEditor = 'https://wookit-editor.netlify.app';
 
