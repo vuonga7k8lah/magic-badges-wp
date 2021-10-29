@@ -94,7 +94,7 @@ class WoocommerceProduct implements IPlatform
                 (string)get_post_meta($id, $this->salePriceKey, true) ?: '0',
             ];
             $aItems[] = [
-                'id'         => $id,
+                'id'         => (string)$id,
                 'outOfStock' => ProductMetaModel::getStockStatus($id) === 'outofstock',
                 'title'      => $oQuery->post->post_title,
                 'slug'       => $oQuery->post->post_name,
@@ -177,7 +177,7 @@ class WoocommerceProduct implements IPlatform
                 (string)get_post_meta($id, $this->salePriceKey, true) ?: '0',
             ];
             $aItems[] = [
-                'id'         => $id,
+                'id'         => (string)$id,
                 'outOfStock' => ProductMetaModel::getStockStatus($id) === 'outofstock',
                 'title'      => $oQuery->post->post_title,
                 'slug'       => $oQuery->post->post_name,
