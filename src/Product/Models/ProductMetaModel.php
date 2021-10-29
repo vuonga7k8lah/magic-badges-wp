@@ -12,4 +12,12 @@ class ProductMetaModel
         return $wpdb->get_var($wpdb->prepare("SELECT stock_status FROM " . $wpdb->prefix . self::$tableName .
             " WHERE product_id=%d", $productID));
     }
+
+    public static function isProductOnSale($productID): ?bool
+    {
+        global $wpdb;
+        $query = $wpdb->get_var($wpdb->prepare("SELECT onsale FROM " . $wpdb->prefix . self::$tableName .
+            " WHERE product_id=%d", $productID));
+        return !empty($query);
+    }
 }

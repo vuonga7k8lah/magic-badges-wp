@@ -396,7 +396,7 @@ class ProductController
     {
         $postID = (int)$oRequest->get_param('id');
         $slug = (string)$oRequest->get_param('slug');
-        $badgeID = $oRequest->get_param('badgeID');
+        $badgeID = $oRequest->get_param('badge_id');
         $config = $oRequest->get_param('config');
         $productID = $oRequest->get_param('productID');
         if (empty(get_current_user_id())) {

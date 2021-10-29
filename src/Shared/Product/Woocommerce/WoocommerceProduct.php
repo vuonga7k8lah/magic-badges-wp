@@ -97,10 +97,12 @@ class WoocommerceProduct implements IPlatform
                 'id'         => (string)$id,
                 'outOfStock' => ProductMetaModel::getStockStatus($id) === 'outofstock',
                 'title'      => $oQuery->post->post_title,
+                'onSale'     => ProductMetaModel::isProductOnSale($id),
                 'slug'       => $oQuery->post->post_name,
                 'link'       => get_permalink($id),
                 'image'      => $aImage,
                 'price'      => $aPrice,
+                'createDate' => $oQuery->post->post_date
             ];
         }
         $maxPages = $oQuery->max_num_pages;
