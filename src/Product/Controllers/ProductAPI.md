@@ -90,7 +90,6 @@ export interface FeaturedImage {
 | Param | Type | Description | Default |
 | --- | --- | ----| --- |
 | limit| int | Số lượng items / trang. Maximum: 30. Quá 30 sử dụng default | 10 |
-| cursor | string |  | undefined |
 | s | string | search sản phẩm |  |
 | orderby | ProductSortKeys | lọc theo dữ liệu nào | TITLE |
 | status | 'active' / 'deactive' / 'any' | Trường hợp all thì trả về cả popups active và deactive| any |

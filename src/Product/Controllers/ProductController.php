@@ -146,7 +146,7 @@ class ProductController
         try {
             $slugs = $oRequest->get_param('slugs');
             $productIDs = $oRequest->get_param('productIDs');
-            $badgeID = $oRequest->get_param('badgeID');
+            $badgeID = $oRequest->get_param('badge_id');
             $config = $oRequest->get_param('config');
             if (empty(get_current_user_id())) {
                 throw new Exception(esc_html__('You must be logged in before performing this function',
@@ -274,7 +274,7 @@ class ProductController
             $slugs = $oRequest->get_param('slugs');
             $productIDs = $oRequest->get_param('productIDs');
             $ids = $oRequest->get_param('ids');
-            $badgeID = $oRequest->get_param('badgeID');
+            $badgeID = $oRequest->get_param('badge_id');
             $config = $oRequest->get_param('config');
             if (empty(get_current_user_id())) {
                 throw new Exception(esc_html__('You must be logged in before performing this function',
