@@ -1,6 +1,5 @@
-#mskmbwp-dashboard {
+#badges-iframe {
     padding-top: 20px;
     width: 1500px;
-    height: 750px;
-    background: red;
+    min-height: 850px;
 }

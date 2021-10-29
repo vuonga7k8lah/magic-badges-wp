@@ -70,13 +70,13 @@ class DashboardController
     {
         ?>
         <div id="mskmbwp-dashboard">
-            <iframe id="mskmbwp-iframe" src="<?php echo esc_url($this->getIframe()); ?>"></iframe>
+            <iframe id="badges-iframe" src="<?php echo esc_url($this->getIframe()); ?>"></iframe>
         </div>
         <?php
     }
 
     private function getIframe(): string
     {
-        return defined('MSKMBWP_IFRAME') ? MSKMBWP_IFRAME : 'https://localhost::3000/';
+        return defined('MSKMBWP_IFRAME') ? MSKMBWP_IFRAME : 'https://magic-badges-service.netlify.app/';
     }
 }
