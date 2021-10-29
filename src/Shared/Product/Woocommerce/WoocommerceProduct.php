@@ -33,6 +33,7 @@ class WoocommerceProduct implements IPlatform
 
     public function getProducts($customerID, array $aArgs = []): array
     {
+
         $aArgs = wp_parse_args($aArgs, [
             'post_status' => 'publish',
             'limit'       => 50,
@@ -40,6 +41,7 @@ class WoocommerceProduct implements IPlatform
             'order'       => 'ASC',
             'orderby'     => 'title'
         ]);
+
         if (isset($aArgs['page']) && $aArgs['page']) {
             $aArgs['paged'] = $aArgs['page'];
         } else {
@@ -48,14 +50,17 @@ class WoocommerceProduct implements IPlatform
         unset($aArgs['page']);
 
         if (!empty($aArgs['limit'])) {
-           // $aArgs['posts_per_page'] = $aArgs['limit'];
+            // $aArgs['posts_per_page'] = $aArgs['limit'];
             $aArgs['posts_per_page'] = 20;
             unset($aArgs['limit']);
         }
-        if (!empty($search)) {
-            $aArgs['s'] = $search;
+
+        if (isset($aArgs['s']) && !empty($aArgs['s'])) {
             $aArgs['sentence'] = true;
+        } else {
+            unset($aArgs['s']);
         }
+
         $oQuery = new WP_Query($aArgs);
         if (!$oQuery->have_posts()) {
             wp_reset_postdata();
@@ -137,7 +142,9 @@ class WoocommerceProduct implements IPlatform
             $aArgs['posts_per_page'] = $aArgs['limit'];
             unset($aArgs['limit']);
         }
+
         $oQuery = new WP_Query($aArgs);
+
         if (!$oQuery->have_posts()) {
             wp_reset_postdata();
             return MessageFactory::factory()->success(

@@ -37,6 +37,7 @@ require_once plugin_dir_path(__FILE__) . 'vendor/autoload.php';
 require_once plugin_dir_path(__FILE__) . 'src/Dashboard/Dashboard.php';
 require_once plugin_dir_path(__FILE__) . 'src/DefaultBadge/DefaultBadge.php';
 require_once plugin_dir_path(__FILE__) . 'src/Product/Product.php';
+require_once plugin_dir_path(__FILE__) . 'src/Automatic/Automatic.php';
 
 
 register_activation_hook(__FILE__, function () {

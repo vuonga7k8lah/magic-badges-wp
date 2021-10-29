@@ -8,7 +8,7 @@ trait TraitPostHelps
 {
     public function getPostTypes()
     {
-        return apply_filters(MYSHOPKIT_MB_HOOK_PREFIX . 'src/Shared/Post/TraitPostHelps/getListPostType', [
+        return apply_filters(MYSHOPKIT_MB_WP_HOOK_PREFIX . 'src/Shared/Post/TraitPostHelps/getListPostType', [
             'manual'     => AutoPrefix::namePrefix('manual'),
             'badge'      => AutoPrefix::namePrefix('badge'),
             'newArrival' => AutoPrefix::namePrefix('new_arrival'),

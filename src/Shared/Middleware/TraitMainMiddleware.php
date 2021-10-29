@@ -1,12 +1,12 @@
 <?php
 
-namespace MyShopKitMB\Shared\Middleware;
+namespace MyShopKitMBWP\Shared\Middleware;
 
 
 
 use Exception;
-use MyShopKitMB\Illuminate\Message\MessageFactory;
-use MyShopKitMB\Shared\Middleware\Middlewares\IMiddleware;
+use MyShopKitMBWP\Illuminate\Message\MessageFactory;
+use MyShopKitMBWP\Shared\Middleware\Middlewares\IMiddleware;
 
 trait TraitMainMiddleware
 {
@@ -66,7 +66,7 @@ trait TraitMainMiddleware
 
     private function getAllMiddlewares(): array
     {
-        $aAllMiddleware = include(MYSHOPKIT_MB_PATH . 'src/Shared/Middleware/Configs/Configuration.php');
+        $aAllMiddleware = include(MYSHOPKIT_MB_WP_PATH . 'src/Shared/Middleware/Configs/Configuration.php');
         if (is_array($aAllMiddleware) && !empty($aAllMiddleware)) {
             return MessageFactory::factory()->success('OK', $aAllMiddleware);
         }

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace MyShopKitMB\Shared\Middleware\Middlewares;
+namespace MyShopKitMBWP\Shared\Middleware\Middlewares;
 
 
 interface IMiddleware {

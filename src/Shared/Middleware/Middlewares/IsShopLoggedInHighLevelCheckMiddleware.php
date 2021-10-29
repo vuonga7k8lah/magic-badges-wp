@@ -1,10 +1,10 @@
 <?php
 
 
-namespace MyShopKitMB\Shared\Middleware\Middlewares;
+namespace MyShopKitMBWP\Shared\Middleware\Middlewares;
 
 
-use MyShopKitMB\Illuminate\Message\MessageFactory;
+use MyShopKitMBWP\Illuminate\Message\MessageFactory;
 
 class IsShopLoggedInHighLevelCheckMiddleware implements IMiddleware
 {

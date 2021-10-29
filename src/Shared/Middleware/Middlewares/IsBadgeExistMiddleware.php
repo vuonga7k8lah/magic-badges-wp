@@ -1,11 +1,11 @@
 <?php
 
 
-namespace MyShopKitMB\Shared\Middleware\Middlewares;
+namespace MyShopKitMBWP\Shared\Middleware\Middlewares;
 
 
 use Exception;
-use MyShopKitMB\Illuminate\Message\MessageFactory;
+use MyShopKitMBWP\Illuminate\Message\MessageFactory;
 
 
 class IsBadgeExistMiddleware implements IMiddleware

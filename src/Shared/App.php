@@ -1,6 +1,6 @@
 <?php
 
-namespace MyShopKitMB\Shared;
+namespace MyShopKitMBWP\Shared;
 
 class App
 {

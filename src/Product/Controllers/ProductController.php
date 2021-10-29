@@ -583,13 +583,15 @@ class ProductController
                 );
             }
             $aDataManualProduct = $aManualResponse['data']['items'];
-            $page =(int) $oRequest->get_param('page') ?? $this->page;
+            $page = (int)$oRequest->get_param('page') ?: $this->page;
             $i = 0;
             do {
+
                 $aWCResponse = $this->getProductsWC($customerID,
                     [
                         'limit' => $limit,
-                        'page'  => $page +$i
+                        'page'  => ($page + $i),
+                        's'     => $search
                     ]);
                 $this->maxPages = $aWCResponse['data']['maxPages'];
                 if ($aWCResponse['status'] == 'error') {
@@ -602,7 +604,7 @@ class ProductController
                     $aProducts,
                     20);
                 $i++;
-            } while (!(count($aProducts) == 20) && !($i == 5));
+            } while (!(count($aProducts) == 20) && !($i == 5) && !(($page + $i)>=$this->maxPages));
 
             return MessageFactory::factory('rest')->success(sprintf(esc_html__('We found %s products',
                 MYSHOPKIT_MB_WP_REST_NAMESPACE), count($aProducts)), [
