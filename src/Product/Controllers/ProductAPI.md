@@ -55,7 +55,6 @@ export interface Items {
 export interface Manual {
     config: object,
     urlImage: string,
-    'badge_id': string,
     'id': string,
 }
 
@@ -127,7 +126,6 @@ export interface Items {
     priceRangeV2: PriceRangeV2
     featuredImage: FeaturedImage
     handle: string
-    cursor: string
     /** manual config badges**/
     manual: Manual
     isSelected: boolean
@@ -136,8 +134,7 @@ export interface Items {
 export interface Manual {
     config: object,
     urlImage: string,
-    'badge_id': string,
-    'id': string,
+    id: string,
 }
 
 export interface PriceRangeV2 {
@@ -170,12 +167,12 @@ https://website.com/vge/magic-badges/v1/manual-products
 
 ##### body-param
 
-param | type | description |default
---- | --- | ---| --- |
-shopName | string | Tên của shop | undefined
-badge_id | number | id của default badge | undefined
-slugs | string | tên sản phẩm dưới dạng slug | undefined
-config | string | config badges của sản phẩm | undefined
+param | type | description                     |default
+--- | --- |---------------------------------| --- |
+shopName | string | Tên của shop                    | undefined
+badgeUrl | number | Đường dẫn ảnh của default badge | undefined
+slugs | string | tên sản phẩm dưới dạng slug     | undefined
+config | string | config badges của sản phẩm      | undefined
 
 ````ts
 export interface Manual {
@@ -209,7 +206,7 @@ param | type | description |default
 --- | --- | ---| --- |
 shopName | string | Tên của shop | undefined
 status | (active/deactive) | status manual | undefined
-badge_id | number | id của default badge | undefined
+badgeUrl | number | Đường dẫn ảnh của default badge | undefined
 ids | string | id của manual badge | undefined
 slugs | string | tên sản phẩm dưới dạng slug | undefined
 config | string | config badges của sản phẩm | undefined
@@ -246,7 +243,7 @@ param | type | description |default
 --- | --- | ---| --- |
 shopName | string | Tên của shop | undefined
 status | (active/deactive) | status manual | undefined
-badge_id | number | id của default badge | undefined
+badgeUrl | number | Đường dẫn ảnh của default badge | undefined
 slug | string | tên sản phẩm dưới dạng slug | undefined
 config | string | config badges của sản phẩm | undefined
 

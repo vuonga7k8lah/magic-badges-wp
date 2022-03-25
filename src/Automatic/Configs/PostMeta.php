@@ -14,10 +14,10 @@ return [
                 'id'         => 'config',
                 'type'       => 'textarea'
             ],
-            'badge_id' => [
-                'name'       => esc_html__('Badge ID', MYSHOPKIT_MB_WP_REST_NAMESPACE),
+            'badgeUrl' => [
+                'name'       => esc_html__('Badge URL', MYSHOPKIT_MB_WP_REST_NAMESPACE),
                 'save_field' => true,
-                'id'         => 'badge_id',
+                'id'         => 'badgeUrl',
                 'type'       => 'text'
             ]
         ]
@@ -33,10 +33,10 @@ return [
                 'id'         => 'config',
                 'type'       => 'textarea'
             ],
-            'badge_id' => [
-                'name'       => esc_html__('Badge ID', MYSHOPKIT_MB_WP_REST_NAMESPACE),
+            'badgeUrl' => [
+                'name'       => esc_html__('Badge URL', MYSHOPKIT_MB_WP_REST_NAMESPACE),
                 'save_field' => true,
-                'id'         => 'badge_id',
+                'id'         => 'badgeUrl',
                 'type'       => 'text'
             ]
         ]
@@ -52,10 +52,10 @@ return [
                 'id'         => 'config',
                 'type'       => 'textarea'
             ],
-            'badge_id' => [
-                'name'       => esc_html__('Badge ID', MYSHOPKIT_MB_WP_REST_NAMESPACE),
+            'badgeUrl' => [
+                'name'       => esc_html__('Badge URL', MYSHOPKIT_MB_WP_REST_NAMESPACE),
                 'save_field' => true,
-                'id'         => 'badge_id',
+                'id'         => 'badgeUrl',
                 'type'       => 'text'
             ]
         ]

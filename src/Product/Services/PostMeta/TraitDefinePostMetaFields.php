@@ -17,8 +17,8 @@ trait TraitDefinePostMetaFields
                     'callbackFunc' => 'isJson'
                 ]
             ],
-            'badge_id'   => [
-                'key'              => 'badge_id',
+            'badge_url'   => [
+                'key'              => 'badge_url',
                 'sanitizeCallback' => 'sanitize_text_field',
                 'assert'           => [
                     'callbackFunc' => 'notEmpty'

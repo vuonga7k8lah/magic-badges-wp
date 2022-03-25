@@ -4,6 +4,7 @@
 namespace MyShopKitMBWP\Automatic\Services\Post;
 
 
+use MyShopKitMBWP\Illuminate\Prefix\AutoPrefix;
 use MyShopKitMBWP\Shared\Post\Query\PostSkeleton;
 
 class AutomaticSkeletonService extends PostSkeleton
@@ -16,7 +17,7 @@ class AutomaticSkeletonService extends PostSkeleton
 
     public function getUrlImage(): string
     {
-        return get_the_post_thumbnail_url($this->getBadgeID());
+        return get_post_meta($this->oPost->ID,AutoPrefix::namePrefix('badgeUrl'),true);
     }
 
     public function getPostType(): string

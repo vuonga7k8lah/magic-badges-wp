@@ -247,6 +247,7 @@ class AutomaticBadgeController
                 ->error(esc_html__('You must be logged in before performing this function',
                     MYSHOPKIT_MB_WP_REST_NAMESPACE), 401);
         }
+
         $aData = $oRequest->get_params();
         $aResponse = (new AutomaticQueryService())->setRawArgs(
             array_merge(
@@ -257,7 +258,8 @@ class AutomaticBadgeController
                 ]
             )
         )->parseArgs()
-            ->query(new AutomaticSkeletonService(), 'id,title,config,content,urlImage,badgeID,postType,status');
+            ->query(new AutomaticSkeletonService(), 'id,title,config,content,urlImage,postType,status');
+
         if ($aResponse['status'] === 'error') {
             return MessageFactory::factory('rest')->error(
                 $aResponse['message'],
@@ -275,7 +277,6 @@ class AutomaticBadgeController
                     $aDataAutomatic[$postTypeKey] = [
                         'id'          => $aAutomatic['id'],
                         'config'      => $aAutomatic['config'],
-                        'badge_id'    => $aAutomatic['badgeID'],
                         'urlImage'    => $aAutomatic['urlImage'],
                         'title'       => $aAutomatic['title'],
                         'postType'    => $postTypeKey,

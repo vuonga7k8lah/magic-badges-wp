@@ -7,30 +7,27 @@ return [
         'id'          => '',
         'config'      => null,
         'postType'    => 'out_of_stock',
-        'badge_id'    => ThemeOption::getBadgeID('out_of_stock'),
-        'urlImage'    => get_the_post_thumbnail_url(ThemeOption::getBadgeID('out_of_stock')),
-        'title'       => ThemeOption::getTitle('out_of_stock'),
-        'description' => ThemeOption::getDescription('out_of_stock'),
+        'urlImage'    => 'https://magicbadges.myshopkit.app/store/2021/10/svg3-1.svg',
+        'title'       => 'Out Of Stock',
+        'description' => 'Show badge when stock drops to zero',
         'isSelected'  => false
     ],
     'on_sale'      => [
         'id'          => '',
         'config'      => null,
         'postType'    => 'on_sale',
-        'badge_id'    => ThemeOption::getBadgeID('on_sale'),
-        'urlImage'    => get_the_post_thumbnail_url(ThemeOption::getBadgeID('on_sale')),
-        'title'       => ThemeOption::getTitle('on_sale'),
-        'description' => ThemeOption::getDescription('on_sale'),
+        'urlImage'    => 'https://magicbadges.myshopkit.app/store/2021/11/svg183.svg',
+        'title'       => 'On Sale',
+        'description' => 'Show badge on products that are on sale',
         'isSelected'  => false
     ],
     'new_arrival'  => [
         'id'          => '',
         'config'      => null,
         'postType'    => 'new_arrival',
-        'badge_id'    => ThemeOption::getBadgeID('new_arrival'),
-        'urlImage'    => get_the_post_thumbnail_url(ThemeOption::getBadgeID('new_arrival')),
-        'title'       => ThemeOption::getTitle('new_arrival'),
-        'description' => ThemeOption::getDescription('new_arrival'),
+        'urlImage'    => 'https://magicbadges.myshopkit.app/store/2021/09/svg205.svg',
+        'title'       => 'New Arrival',
+        'description' => 'Show badge on products that are added in last 7 days',
         'isSelected'  => false
     ]
 ];

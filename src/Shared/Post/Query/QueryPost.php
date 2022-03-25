@@ -133,15 +133,14 @@ class QueryPost
             if ($this->isStatusConfig) {
                 $postID = $this->oQuery->post->ID;
                 $aPostMeta = get_post_meta($postID, AutoPrefix::namePrefix('config'), true);
-                $badgeID = get_post_meta($postID, AutoPrefix::namePrefix('badge_id'), true);
+                $badgeUrl = get_post_meta($postID, AutoPrefix::namePrefix('badge_url'), true);
                 $productID = get_post_meta($postID, AutoPrefix::namePrefix('product_id'), true);
                 $aItems[$productID] = [
                     'id'        => (string)$postID,
                     'config'    => $aPostMeta,
-                    'badgeID'   => $badgeID,
                     'productID' => $productID,
                     'status'    => get_post_status($postID) == 'publish',
-                    'urlImage'  => get_the_post_thumbnail_url($badgeID)
+                    'urlImage'  => $badgeUrl
                 ];
             } else {
                 $aItems[] = $oPostSkeleton->setPost($this->oQuery->post)->getPostData($pluck);

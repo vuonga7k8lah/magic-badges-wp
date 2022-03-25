@@ -146,7 +146,7 @@ class ProductController
         try {
             $slugs = $oRequest->get_param('slugs');
             $productIDs = $oRequest->get_param('productIDs');
-            $badgeID = $oRequest->get_param('badge_id');
+            $badgeURL = $oRequest->get_param('badgeUrl');
             $config = $oRequest->get_param('config');
             if (empty(get_current_user_id())) {
                 throw new Exception(esc_html__('You must be logged in before performing this function',
@@ -160,11 +160,12 @@ class ProductController
                 throw new Exception(esc_html__('The param productIDs is required',
                     MYSHOPKIT_MB_WP_REST_NAMESPACE), 401);
             }
-            $aFormatDate = $this->formatAndConvertParamsToArray($productIDs, $slugs);
 
-            foreach ($aFormatDate as $productID => $slug) {
+            $aFormatData = $this->formatAndConvertParamsToArray($productIDs, $slugs);
 
-                $aCreateResponse = $this->handleCreateManualProduct($slug, $productID, $badgeID, $config);
+            foreach ($aFormatData as $productID => $slug) {
+
+                $aCreateResponse = $this->handleCreateManualProduct($slug, $productID, $badgeURL, $config);
                 if ($aCreateResponse['status'] === 'error') {
                     $aListOfErrors[$slug] = $aCreateResponse['data'];
                 } else {
@@ -181,7 +182,7 @@ class ProductController
                 );
             }
 
-            if (count($aListOfErrors) == count($aFormatDate)) {
+            if (count($aListOfErrors) == count($aFormatData)) {
                 return MessageFactory::factory('rest')
                     ->error(
                         sprintf(
@@ -226,7 +227,7 @@ class ProductController
         return array_combine($aData[0], $aData[1]);
     }
 
-    public function handleCreateManualProduct(string $slug, int $productID, string $badgeID, string $config)
+    public function handleCreateManualProduct(string $slug, int $productID, string $badgeURL, string $config)
     {
         try {
             if (ManualModels::isCheckPostExitsByPostName($slug, $this->postType)) {
@@ -242,7 +243,7 @@ class ProductController
             }
             $aResponse = (new AddPostMetaService())->setID($aPostResponse['data']['id'])
                 ->addPostMeta([
-                    'badge_id'   => $badgeID,
+                    'badge_url'   => $badgeURL,
                     'config'     => $config,
                     'product_id' => $productID,
                 ]);
@@ -509,12 +510,14 @@ class ProductController
             }
             $aManualResponse = (new ProductQueryService())->setRawArgs($aArgs)->parseArgs()->setConfigKeyTitle(true)
                 ->query(new PostSkeleton(), 'id,title');
+
             if ($aManualResponse['status'] === 'error') {
                 return MessageFactory::factory('rest')->error(
                     esc_html__('Sorry, We could not find your product', MYSHOPKIT_MB_WP_REST_NAMESPACE),
                     $aManualResponse['code']
                 );
             }
+
             if (!empty($aDataManualProduct = $aManualResponse['data']['items'])) {
 
                 $aProductIDs = array_keys($aDataManualProduct);
@@ -532,7 +535,7 @@ class ProductController
                             'manual'     => [
                                 'config'   => json_decode($aDataManual['config'], true),
                                 'urlImage' => $aDataManual['urlImage'],
-                                'badge_id' => $aDataManual['badgeID'],
+                                'productId' => $aDataManual['productID'],
                                 'id'       => $aDataManual['id'],
                             ],
                             'isSelected' => false,

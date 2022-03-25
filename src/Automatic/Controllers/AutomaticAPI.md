@@ -33,7 +33,6 @@ export interface Data {
 export interface Items {
     id: string
     config?: Config
-    badge_id: string
     urlImage: string
     title: string
     postType: string
@@ -62,7 +61,7 @@ https://magicbadges.myshopkit.app/vge/magic-badges/v1/automatics
 param | type | description |default
 --- | --- | ---| --- |
 postType | string | - | -
-badge_id | string | - | -
+badgeUrl | string | - | -
 title | string | - | -
 description | string | - | mô tả badge
 config | string | config badges của sản phẩm | undefined
@@ -94,7 +93,7 @@ https://magicbadges.myshopkit.app/vge/magic-badges/v1/automatics/:id
 param | type | description |default
 --- | --- | ---| --- |
 title | string | - | -
-badge_id | string | - | -
+badgeUrl | string | - | -
 description | string | - | mô tả badge
 status | (active/deactive) | trạng thái | -
 config | string | config badges của sản phẩm | undefined
