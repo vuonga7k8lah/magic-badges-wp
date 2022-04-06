@@ -44,9 +44,11 @@ export interface Data {
 export interface Items {
     id: string
     title: string
-    price: Price
+    price: string[]
     image: Image
-    slug: string
+    handle: string
+    link: string
+    image: Image
     /** manual config badges**/
     manual: Manual
     isSelected: boolean
@@ -55,26 +57,14 @@ export interface Items {
 export interface Manual {
     config: object,
     urlImage: string,
-    'id': string,
+    productId: string,
+    id: string,
 }
 
-export interface Price {
-    maxVariantPrice: MaxVariantPrice
-    minVariantPrice: MinVariantPrice
-}
-
-export interface MaxVariantPrice {
-    amount: string
-}
-
-export interface MinVariantPrice {
-    amount: string
-}
-
-export interface FeaturedImage {
-    height: number
+export interface Image {
     src: string
-    width: number
+    with: number
+    height: number
 }
 ```
 
@@ -116,16 +106,17 @@ export interface Products {
 
 export interface Data {
     items: Items;
-    hasNextPage: boolean
+    maxPages: number
 }
 
 export interface Items {
     id: string
     title: string
-    createdAt: string
-    priceRangeV2: PriceRangeV2
-    featuredImage: FeaturedImage
+    price: string[]
+    image: Image
     handle: string
+    link: string
+    image: Image
     /** manual config badges**/
     manual: Manual
     isSelected: boolean
@@ -134,32 +125,23 @@ export interface Items {
 export interface Manual {
     config: object,
     urlImage: string,
+    productId: string,
     id: string,
 }
 
-export interface PriceRangeV2 {
-    maxVariantPrice: MaxVariantPrice
-    minVariantPrice: MinVariantPrice
-}
-
-export interface MaxVariantPrice {
-    amount: string
-}
-
-export interface MinVariantPrice {
-    amount: string
-}
-
-export interface FeaturedImage {
-    height: number
+export interface Image {
     src: string
-    width: number
+    with: number
+    height: number
 }
 ```
 
 ## 2.Create Badges Manual
 
 #### method:post
+
+##### header
+Authorization
 
 ### API endpoint:
 
@@ -172,6 +154,7 @@ param | type | description                     |default
 shopName | string | Tên của shop                    | undefined
 badgeUrl | number | Đường dẫn ảnh của default badge | undefined
 slugs | string | tên sản phẩm dưới dạng slug     | undefined
+productIDs | string | list các product id               | undefined
 config | string | config badges của sản phẩm      | undefined
 
 ````ts
@@ -199,6 +182,9 @@ export interface Item {
 ### API endpoint:
 
 https://website.com/vge/magic-badges/v1/manual-products
+
+##### header
+Authorization
 
 ##### x-www-form-urlencoded
 
@@ -237,6 +223,9 @@ export interface Item {
 
 https://website.com/vge/magic-badges/v1/manual-products/:id
 
+##### header
+Authorization
+
 ##### x-www-form-urlencoded
 
 param | type | description |default
@@ -271,6 +260,8 @@ export interface Item {
 
 https://website.com/vge/magic-badges/v1/manual-products/:id
 
+##### header
+Authorization
 ````ts
 export interface Manual {
     data: Data
@@ -289,6 +280,9 @@ export interface Data {
 ### API endpoint:
 
 https://website.com/vge/magic-badges/v1/manual-products
+
+##### header
+Authorization
 
 ##### x-www-form-urlencoded
 

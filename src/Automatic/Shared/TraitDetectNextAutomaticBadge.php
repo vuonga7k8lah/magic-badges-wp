@@ -1,6 +1,6 @@
 <?php
 
-namespace MyShopKitMB\Automatic\Shared;
+namespace MyShopKitMBWP\Automatic\Shared;
 
 use Exception;
 
@@ -15,7 +15,7 @@ trait TraitDetectNextAutomaticBadge
 	{
 		$order = $this->detectCurrentAutomaticBadgeOrder($oCurrentAutomaticBadge);
 		if ($this->isTheEnd($order)) {
-			throw new \Exception(esc_html__('The product has not added to any badge', 'myshopkit-magic-bages'));
+			throw new \Exception(esc_html__('The product has not added to any badge', MYSHOPKIT_MB_WP_REST_NAMESPACE));
 		}
 
 		return new $this->aAutomaticBadgesOrder[$order + 1]($this->oAutomaticContext);
@@ -34,7 +34,7 @@ trait TraitDetectNextAutomaticBadge
 		}
 
 		if ($order === null) {
-			throw new Exception(esc_html__('The Object does not belong to any Classes', 'myshopkit-magic-badges'));
+			throw new Exception(esc_html__('The Object does not belong to any Classes', MYSHOPKIT_MB_WP_REST_NAMESPACE));
 		}
 	}
 

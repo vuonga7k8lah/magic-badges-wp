@@ -1,12 +1,10 @@
 <?php
 
-namespace MyShopKitMB\Automatic\Shared;
+namespace MyShopKitMBWP\Automatic\Shared;
 
-use EBase\Logger\Models\LogModel;
-use EBase\Shared\Slack\PostMessage;
 use Exception;
-use MyShopKitMB\Illuminate\Message\MessageFactory;
-use MyShopKitMB\Illuminate\Prefix\AutoPrefix;
+use MyShopKitMBWP\Illuminate\Message\MessageFactory;
+use MyShopKitMBWP\Illuminate\Prefix\AutoPrefix;
 
 class OnSaleBadge implements IAutomaticState
 {
@@ -78,8 +76,7 @@ class OnSaleBadge implements IAutomaticState
 		$jConfig = get_post_meta($aPosts[0]->ID, AutoPrefix::namePrefix('config'), true);
 		self::$aSettings = [
 			'config'   => json_decode($jConfig, true),
-			'urlImage' => get_the_post_thumbnail_url(get_post_meta($aPosts[0]->ID, AutoPrefix::namePrefix('badge_id'),
-				true))
+			'urlImage' => get_post_meta($aPosts[0]->ID, AutoPrefix::namePrefix('badgeUrl'), true)
 		];
 		return true;
 	}
@@ -91,25 +88,9 @@ class OnSaleBadge implements IAutomaticState
 	 */
 	private function isOnSale(): bool
 	{
-		$maxPrice = $this->oAutomaticContext->getProductInfo()['priceRangeV2']['maxVariantPrice']['amount'];
-		$minPrice = $this->oAutomaticContext->getProductInfo()['priceRangeV2']['minVariantPrice']['amount'];
+//		$maxPrice = $this->oAutomaticContext->getProductInfo()['priceRangeV2']['maxVariantPrice']['amount'];
+//		$minPrice = $this->oAutomaticContext->getProductInfo()['priceRangeV2']['minVariantPrice']['amount'];
 
-		if (isset( $this->oAutomaticContext->getProductInfo()['variants']['edges']) && !empty(
-			$this->oAutomaticContext->getProductInfo()['variants']['edges'])) {
-			$aVariants = $this->oAutomaticContext->getProductInfo()['variants']['edges'];
-
-
-			foreach ($aVariants as $aNode) {
-				if (empty($aNode['node']['compareAtPrice'])) {
-					continue;
-				}
-
-				if ($aNode['node']['compareAtPrice'] != $minPrice && $aNode['node']['compareAtPrice'] != $maxPrice && $aNode['node']['compareAtPrice'] > $minPrice) {
-					return true;
-				}
-			}
-		}
-
-		return false;
+		return $this->oAutomaticContext->getProductInfo()['onSale'];;
 	}
 }

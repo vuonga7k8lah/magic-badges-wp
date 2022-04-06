@@ -10,7 +10,7 @@ class ManualRegistration
 {
     public function __construct()
     {
-        add_action('cmb2_admin_init', [$this, 'registerBox']);
+        //add_action('cmb2_admin_init', [$this, 'registerBox']);
         add_action('init', [$this, 'registerManual']);
     }
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace MyShopKitMB\Automatic\Shared;
+namespace MyShopKitMBWP\Automatic\Shared;
 
 trait TraitSetAutomaticBadges
 {
 	private array $aAutomaticBadgesOrder
 		= [
-			'MyShopKitMB\Automatic\Shared\OutOfStockBadge',
-			'MyShopKitMB\Automatic\Shared\OnSaleBadge',
-			'MyShopKitMB\Automatic\Shared\NewArrivalBadge',
+			'MyShopKitMBWP\Automatic\Shared\OutOfStockBadge',
+			'MyShopKitMBWP\Automatic\Shared\OnSaleBadge',
+			'MyShopKitMBWP\Automatic\Shared\NewArrivalBadge',
 		];
 }

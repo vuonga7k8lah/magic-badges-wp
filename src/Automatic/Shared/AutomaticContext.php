@@ -1,6 +1,6 @@
 <?php
 
-namespace MyShopKitMB\Automatic\Shared;
+namespace MyShopKitMBWP\Automatic\Shared;
 
 class AutomaticContext
 {
